@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 import Play from "../Asset/play.png";
 import Rating from "./Rating";
-import NavBar from "./Navbar";
+import VideoPlayer from "react-video-js-player";
 
 const MovieDetails = () => {
   const { id } = useParams();
- 
+
   const [details, setDetails] = useState([]);
   const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [displayVideo, setDisplayVideo] = useState(false);
+  const [plateforme, setPlateforme] = useState([]);
   const API_KEY = process.env.REACT_APP_API_KEY;
   const fetchData = async () => {
     try {
@@ -36,6 +37,16 @@ const MovieDetails = () => {
       console.log(ErrorEvent);
     }
   };
+  const fetchDataPlateforme = async () => {
+    try {
+      const callData = await axios.get(
+        `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${API_KEY}`
+      );
+      setPlateforme(callData.data.results.FR.flatrate);
+    } catch (err) {
+      console.log(ErrorEvent);
+    }
+  };
 
   const removeContact = () => {
     setVideo((current) =>
@@ -50,9 +61,9 @@ const MovieDetails = () => {
   useEffect(() => {
     fetchData();
     fetchDataVideo();
+    fetchDataPlateforme();
   }, []);
 
-  console.log(details);
   return (
     <>
       {loading && (
@@ -63,26 +74,44 @@ const MovieDetails = () => {
                 className="moviePicture"
                 src={`https://image.tmdb.org/t/p/original/${details.backdrop_path}`}
                 alt="film"
-                
               />
               <h1>{details.title}</h1>
             </div>
 
             <div className="credit">
-              <Rating children={details.vote_average.toFixed(2)}/> 
-              <p className="release">Since : {details.first_air_date.substr(0, 4)}</p>
+              <Rating children={details.vote_average.toFixed(2)} />
+              <p className="release">
+                Since : {details.first_air_date.substr(0, 4)}
+              </p>
             </div>
             <div>
-                Number of saisons : {details.number_of_seasons} ({details.number_of_episodes} episodes)
+              Number of saisons : {details.number_of_seasons} (
+              {details.number_of_episodes} episodes)
             </div>
             <p className="synopsis">
               <span>Synopsis :</span> {details.overview}
             </p>
-            <div className='line'></div>
+            <div>
+              {plateforme.length > 0 && (
+                <div>
+                  <p>Available on :</p>
+                  {plateforme.map((e, i) => (
+                    <img
+                      key={i}
+                      src={`https://image.tmdb.org/t/p/original/${e.logo_path}`}
+                      width={"50px"}
+                      style={{ borderRadius: "50px" }}
+                      alt="plateformelogo"
+                    />
+                  ))}{" "}
+                </div>
+              )}
+            </div>
+            <div className="line"></div>
             <div className="more">
-              <Link 
+              <Link
                 to={`/home/series/${details.title}/${details.id}`}
-                className='similarMovie'
+                className="similarMovie"
               >
                 Similar Series
               </Link>
@@ -105,9 +134,13 @@ const MovieDetails = () => {
               </div>
             </div>
           </div>
-          <div >
+          <div>
             {displayVideo && (
-              <ReactPlayer playing={true} controls={true} width={'854px'} height={'480px'}
+              <ReactPlayer
+                playing={true}
+                controls={true}
+                width={"854px"}
+                height={"480px"}
                 url={`https://www.youtube.com/watch?v=${video[0].key}`}
               />
             )}
