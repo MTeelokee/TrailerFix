@@ -8,7 +8,7 @@ import NavBar from "./Navbar";
 
 const MovieDetails = () => {
   const { id } = useParams();
-
+ 
   const [details, setDetails] = useState([]);
   const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ const MovieDetails = () => {
   const fetchData = async () => {
     try {
       const callData = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`
       );
       setDetails(callData.data);
 
@@ -29,7 +29,7 @@ const MovieDetails = () => {
   const fetchDataVideo = async () => {
     try {
       const callData = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
+        `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${API_KEY}`
       );
       setVideo(callData.data.results);
     } catch (err) {
@@ -52,6 +52,7 @@ const MovieDetails = () => {
     fetchDataVideo();
   }, []);
 
+  console.log(details);
   return (
     <>
       {loading && (
@@ -69,7 +70,10 @@ const MovieDetails = () => {
 
             <div className="credit">
               <Rating children={details.vote_average.toFixed(2)}/> 
-              <p className="release">{`Year of release : ${details.release_date.substr(0, 4)}`}</p>
+              <p className="release">Since : {details.first_air_date.substr(0, 4)}</p>
+            </div>
+            <div>
+                Number of saisons : {details.number_of_seasons} ({details.number_of_episodes} episodes)
             </div>
             <p className="synopsis">
               <span>Synopsis :</span> {details.overview}
@@ -77,10 +81,10 @@ const MovieDetails = () => {
             <div className='line'></div>
             <div className="more">
               <Link 
-                to={`/home/${details.title}/${details.id}`}
+                to={`/home/series/${details.title}/${details.id}`}
                 className='similarMovie'
               >
-                Similar Movies
+                Similar Series
               </Link>
               <div className="video">
                 <button

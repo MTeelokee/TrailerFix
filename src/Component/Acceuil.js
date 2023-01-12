@@ -15,7 +15,7 @@ const Acceuil = () => {
             name: "Mevine",
             img: 1,
           }));
-          navigate("/movie") 
+          navigate("/home/movie") 
     }
 
     const Elyes = () => {
@@ -24,7 +24,7 @@ const Acceuil = () => {
             name: "Elyes",
             img: 2,
           }));
-          navigate("/movie") 
+          navigate("/home/movie") 
     }
 
     return(

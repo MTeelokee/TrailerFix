@@ -52,8 +52,7 @@ const NowTheater = () => {
         ...prevState, start : "12", end : "18"}) )} 
         
     }
-    console.log(slice);
-    console.log(count);
+
   return (
     <div className="NowTheater">
       <img className="iconButtonFilm"
@@ -74,7 +73,7 @@ const NowTheater = () => {
                 alt={`film${i}`}
                 width={"200px"}
                 effect='blur'
-                onClick={() => navigate(`/${e.id}`)}
+                onClick={() => navigate(`/home/${e.id}`)}
               />
             </div>
           )

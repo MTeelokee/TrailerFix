@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import MovieCategory from "./MovieCategory";
-import NowTheater from "./NowTheater";
+import OnTheAir from "./OnTheAir";
 import NavBar from "./Navbar";
+import SerieListCategorie from "./SerieListCategorie"
 const Categorie = () => {
   const [genre, setGenre] = useState([]);
 
@@ -11,7 +12,7 @@ const Categorie = () => {
   const fetchData = async () => {
     try {
       const callData = await axios.get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
+        `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`
       );
       setGenre(callData.data.genres);
     } catch (err) {
@@ -26,14 +27,14 @@ const Categorie = () => {
   return (
    <>
       <div className="displayAll">
-        <h3 className="categoryTitleInTheather">Actuellement au cinéma</h3>
-        <NowTheater />
+        <h3 className="categoryTitleInTheather">Séries populaire</h3>
+        <OnTheAir />
         <ul>
           {genre.map((e) => (
             <div key={e.id}>
               <h3 className="categoryTitle">{e.name}</h3>
               <div>
-                <MovieCategory name={e.id} />
+                <SerieListCategorie name={e.id} />
               </div>
             </div>
           ))}

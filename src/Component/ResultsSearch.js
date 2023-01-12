@@ -6,7 +6,7 @@ import iconGauche from "../Asset/icons8-flèche-gauche-50.png"
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import NavBar from "./Navbar";
+import Logo from "../Asset/trailerflix.png"
 
 const ResultsSearch = () => {
   const navigate = useNavigate();
@@ -32,6 +32,12 @@ const ResultsSearch = () => {
   useEffect(() => {
     fetchData();
   }, [query, count]);
+
+  const clear = () => {
+    const query= document.querySelector(".form__field")
+    query.value = "";
+    navigate(`/home/movie`)
+  }
 
   const changeSlicePlus = () => {
     parseInt(slice.end) === 18 && setCount(count + 1);
@@ -60,7 +66,6 @@ const ResultsSearch = () => {
 
   return (
     <>
-    <NavBar/>
       <div className="moviSearch">
       <img className="iconButtonFilm"
         src={iconGauche}
@@ -69,7 +74,7 @@ const ResultsSearch = () => {
         alt="clickGauche"
         onClick={() => changeSliceMoins()}
       />
-        {resultSearch.length > 0 &&
+        {resultSearch.length > 0 ?
           resultSearch.slice(slice.start, slice.end).map(
             (e, i) =>
               e.poster_path && (
@@ -80,11 +85,24 @@ const ResultsSearch = () => {
                     width={"200px"}
                     alt="film"
                     effect='blur'
-                    onClick={() => navigate(`/${e.id}`)}
+                    onClick={() => navigate(`/home/${e.id}`)}
                   />
                 </div>
               )
-          )}
+          ) :
+          <div className="card">
+          <h3>No Results</h3>
+                  <img
+                    src={Logo}
+                    width={"200px"}
+                    alt="film"
+                    effect='blur'
+                    onClick={() => clear()}
+                  />
+                </div>
+          
+          
+          }
           <img className="iconButtonFilm"
         src={iconDroit}
         width={"40px"}

@@ -4,6 +4,12 @@
 
 .App {
   text-align: center;
+  
+}
+
+.navBar{
+  display: flex;
+  flex-direction: column;
 }
 
 .HTML,body{
@@ -156,8 +162,8 @@ ul{
 
 .categoryTitleInTheather{
   margin-top: 90px;
-  margin-left: 13em;
-  text-align: start;
+  margin-left: 7%;
+  text-align:start;
 }
 
 .moviCategory{

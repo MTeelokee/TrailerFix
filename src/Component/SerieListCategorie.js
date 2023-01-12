@@ -9,14 +9,14 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const MovieCategory = (props) => {
   const navigate = useNavigate();
   const [movie, setMovie] = useState([]);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(1);
   const [slice, setSlice] = useState({ start: "0", end: "6" });
   const API_KEY = process.env.REACT_APP_API_KEY;
 
   const fetchData = async () => {
     try {
       const callData = await axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&include_video=false&page=${count}&with_genres=${props.name}&with_watch_monetization_types=flatrate`
+        `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&include_adult=false&include_video=false&page=${count}&with_genres=${props.name}&with_watch_monetization_types=flatrate`
       );
       setMovie(callData.data.results);
     } catch (err) {
@@ -43,7 +43,7 @@ const MovieCategory = (props) => {
   };
 
   const changeSliceMoins = () =>{
-    parseInt(slice.start) === 0 && count> 2 && setCount(count - 1);
+    parseInt(slice.start) === 0 && count> 1 && setCount(count - 1);
   if(parseInt(slice.start) - 6 >= 0){setSlice( (prevState) => ({
     ...prevState, start : parseInt(slice.start)-6, end : parseInt(slice.end) - 6}) )}
     else if (parseInt(slice.start)=== 0 && count===2){return}
@@ -72,7 +72,7 @@ const MovieCategory = (props) => {
             width={"200px"}
             alt={`film${i}`}
             effect='blur'
-            onClick={() => navigate(`/home/${e.id}`)}
+            onClick={() => navigate(`/home/series/${e.id}`)}
           />
         </div>
       ))}
