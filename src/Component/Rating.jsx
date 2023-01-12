@@ -17,7 +17,7 @@ export default function Rating({ children }) {
   return (
     <>
       <div className="tooltip">
-        <div className="ratings" style={{ color }} >
+        <div className="ratings" style={{ color }}>
           {finalResult}
         </div>
         <span className="tooltiptext">{currentStarValue}/10</span>

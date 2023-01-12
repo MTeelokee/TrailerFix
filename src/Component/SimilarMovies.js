@@ -2,9 +2,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
-import iconGauche from "../Asset/icons8-flèche-gauche-50.png"
+import iconGauche from "../Asset/icons8-flèche-gauche-50.png";
 
 const SimilarMovies = () => {
   const { id } = useParams();
@@ -23,7 +23,7 @@ const SimilarMovies = () => {
       setSimilarMovie(callData.data.results);
       setLoading(true);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 
@@ -46,19 +46,29 @@ const SimilarMovies = () => {
         }));
   };
 
-  const changeSliceMoins = () =>{
-    parseInt(slice.start) === 0 && count> 1 && setCount(count - 1);
-  if(parseInt(slice.start) - 6 >= 0){setSlice( (prevState) => ({
-    ...prevState, start : parseInt(slice.start)-6, end : parseInt(slice.end) - 6}) )}
-    else if (parseInt(slice.start)=== 0 && count===1){return}
-     else{setSlice( (prevState) => ({
-        ...prevState, start : "12", end : "18"}) )} 
-        
+  const changeSliceMoins = () => {
+    parseInt(slice.start) === 0 && count > 1 && setCount(count - 1);
+    if (parseInt(slice.start) - 6 >= 0) {
+      setSlice((prevState) => ({
+        ...prevState,
+        start: parseInt(slice.start) - 6,
+        end: parseInt(slice.end) - 6,
+      }));
+    } else if (parseInt(slice.start) === 0 && count === 1) {
+      return;
+    } else {
+      setSlice((prevState) => ({
+        ...prevState,
+        start: "12",
+        end: "18",
+      }));
     }
+  };
 
   return (
     <div className="moviSearch">
-    <img className="iconButtonFilm"
+      <img
+        className="iconButtonFilm"
         src={iconGauche}
         width={"40px"}
         height={"40px"}
@@ -66,21 +76,19 @@ const SimilarMovies = () => {
         onClick={() => changeSliceMoins()}
       />
       {loading &&
-        similarMovie.slice(slice.start, slice.end).map(
-          (e, i) =>
-           (
-              <div className="card" key={i}>
-                <LazyLoadImage
-                  src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
-                  width={"200px"}
-                  alt="film"
-                  effect='blur'
-                  onClick={() => navigate(`/home/${e.id}`)}
-                />
-              </div>
-            )
-        )}
-        <img className="iconButtonFilm"
+        similarMovie.slice(slice.start, slice.end).map((e, i) => (
+          <div className="card" key={i}>
+            <LazyLoadImage
+              src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
+              width={"200px"}
+              alt="film"
+              effect="blur"
+              onClick={() => navigate(`/home/${e.id}`)}
+            />
+          </div>
+        ))}
+      <img
+        className="iconButtonFilm"
         src={iconDroit}
         width={"40px"}
         height={"40px"}

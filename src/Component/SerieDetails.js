@@ -1,10 +1,9 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 import Play from "../Asset/play.png";
 import Rating from "./Rating";
-import VideoPlayer from "react-video-js-player";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -24,7 +23,7 @@ const MovieDetails = () => {
 
       setLoading(true);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
   const fetchDataVideo = async () => {
@@ -34,7 +33,7 @@ const MovieDetails = () => {
       );
       setVideo(callData.data.results);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
   const fetchDataPlateforme = async () => {
@@ -44,7 +43,7 @@ const MovieDetails = () => {
       );
       setPlateforme(callData.data.results.FR.flatrate);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 

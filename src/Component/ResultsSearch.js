@@ -23,10 +23,10 @@ const ResultsSearch = () => {
         `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${query}&page=${count}&include_adult=false`
       );
       setResultSearch(callData.data.results);
-      
+
       setLoading(true);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 
@@ -35,11 +35,12 @@ const ResultsSearch = () => {
       current.filter(
         (el) => el.media_type.includes("movie") || el.media_type.includes("tv")
       )
-    )}
-  
+    );
+  };
+
   useEffect(() => {
     fetchData();
-    removePeople()
+    removePeople();
   }, [query, count]);
 
   const clear = () => {
@@ -89,7 +90,7 @@ const ResultsSearch = () => {
       navigate(`/home/series/${e.id}`);
     }
   };
-console.log(resultSearch)
+
   return (
     <>
       <div className="moviSearch">

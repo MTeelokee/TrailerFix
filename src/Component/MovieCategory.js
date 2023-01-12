@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
 import iconGauche from "../Asset/icons8-flèche-gauche-50.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const MovieCategory = (props) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const MovieCategory = (props) => {
       );
       setMovie(callData.data.results);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -42,17 +42,24 @@ const MovieCategory = (props) => {
         }));
   };
 
-  const changeSliceMoins = () =>{
-    parseInt(slice.start) === 0 && count> 2 && setCount(count - 1);
-  if(parseInt(slice.start) - 6 >= 0){setSlice( (prevState) => ({
-    ...prevState, start : parseInt(slice.start)-6, end : parseInt(slice.end) - 6}) )}
-    else if (parseInt(slice.start)=== 0 && count===2){return}
-     else{setSlice( (prevState) => ({
-        ...prevState, start : "12", end : "18"}) )} 
-        
+  const changeSliceMoins = () => {
+    parseInt(slice.start) === 0 && count > 2 && setCount(count - 1);
+    if (parseInt(slice.start) - 6 >= 0) {
+      setSlice((prevState) => ({
+        ...prevState,
+        start: parseInt(slice.start) - 6,
+        end: parseInt(slice.end) - 6,
+      }));
+    } else if (parseInt(slice.start) === 0 && count === 2) {
+      return;
+    } else {
+      setSlice((prevState) => ({
+        ...prevState,
+        start: "12",
+        end: "18",
+      }));
     }
-
-
+  };
 
   return (
     <div className="moviCategory">
@@ -71,7 +78,7 @@ const MovieCategory = (props) => {
             src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
             width={"200px"}
             alt={`film${i}`}
-            effect='blur'
+            effect="blur"
             onClick={() => navigate(`/home/${e.id}`)}
           />
         </div>

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import MovieCategory from "./MovieCategory";
 import OnTheAir from "./OnTheAir";
-import NavBar from "./Navbar";
-import SerieListCategorie from "./SerieListCategorie"
+import SerieListCategorie from "./SerieListCategorie";
 const Categorie = () => {
   const [genre, setGenre] = useState([]);
 
@@ -16,7 +14,7 @@ const Categorie = () => {
       );
       setGenre(callData.data.genres);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 
@@ -25,7 +23,7 @@ const Categorie = () => {
   }, []);
 
   return (
-   <>
+    <>
       <div className="displayAll">
         <h3 className="categoryTitleInTheather">Séries populaire</h3>
         <OnTheAir />
@@ -40,9 +38,8 @@ const Categorie = () => {
           ))}
         </ul>
       </div>
-      </>
-    );
-
+    </>
+  );
 };
 
 export default Categorie;

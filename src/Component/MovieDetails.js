@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
@@ -23,7 +23,7 @@ const MovieDetails = () => {
 
       setLoading(true);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
   const fetchDataVideo = async () => {
@@ -33,7 +33,7 @@ const MovieDetails = () => {
       );
       setVideo(callData.data.results);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 
@@ -44,7 +44,7 @@ const MovieDetails = () => {
       );
       setPlateforme(callData.data.results.FR.flatrate);
     } catch (err) {
-      console.log(ErrorEvent);
+      console.log(err);
     }
   };
 
@@ -63,8 +63,6 @@ const MovieDetails = () => {
     fetchDataVideo();
     fetchDataPlateforme();
   }, []);
-
-  console.log(plateforme);
 
   return (
     <>
@@ -92,7 +90,7 @@ const MovieDetails = () => {
               <span>Synopsis :</span> {details.overview}
             </p>
             <div>
-              {plateforme && plateforme.length>0 && (
+              {plateforme && plateforme.length > 0 && (
                 <div>
                   <p>Available on :</p>
                   {plateforme.map((e, i) => (
