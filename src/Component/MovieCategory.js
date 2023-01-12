@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
 import iconGauche from "../Asset/icons8-flèche-gauche-50.png";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const MovieCategory = (props) => {
   const navigate = useNavigate();
@@ -64,11 +66,12 @@ const MovieCategory = (props) => {
       />
       {movie.slice(slice.start, slice.end).map((e, i) => (
         <div className="card" key={i}>
-          <img
+          <LazyLoadImage
             key={i}
             src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
             width={"200px"}
-            alt="film"
+            alt={`film${i}`}
+            effect='blur'
             onClick={() => navigate(`/${e.id}`)}
           />
         </div>

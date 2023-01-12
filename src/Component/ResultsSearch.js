@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import iconGauche from "../Asset/icons8-flèche-gauche-50.png"
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import NavBar from "./Navbar";
 
 const ResultsSearch = () => {
   const navigate = useNavigate();
@@ -57,6 +60,7 @@ const ResultsSearch = () => {
 
   return (
     <>
+    <NavBar/>
       <div className="moviSearch">
       <img className="iconButtonFilm"
         src={iconGauche}
@@ -70,11 +74,12 @@ const ResultsSearch = () => {
             (e, i) =>
               e.poster_path && (
                 <div className="card" key={i}>
-                  <img
+                  <LazyLoadImage
                     
                     src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
                     width={"200px"}
                     alt="film"
+                    effect='blur'
                     onClick={() => navigate(`/${e.id}`)}
                   />
                 </div>

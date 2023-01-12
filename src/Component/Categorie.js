@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import MovieCategory from "./MovieCategory";
 import NowTheater from "./NowTheater";
-
+import NavBar from "./Navbar";
 const Categorie = () => {
   const [genre, setGenre] = useState([]);
 
@@ -24,21 +24,25 @@ const Categorie = () => {
   }, []);
 
   return (
-    <div className="displayAll">
-      <h3>Actuellement au cinéma</h3>
-      <NowTheater />
-      <ul>
-        {genre.map((e) => (
-          <div key={e.id}>
-            <li className="categoryTitle">{e.name}</li>
-            <div>
-              <MovieCategory name={e.id} />
+   <>
+      <NavBar />
+      <div className="displayAll">
+        <h3 className="categoryTitleInTheather">Actuellement au cinéma</h3>
+        <NowTheater />
+        <ul>
+          {genre.map((e) => (
+            <div key={e.id}>
+              <h3 className="categoryTitle">{e.name}</h3>
+              <div>
+                <MovieCategory name={e.id} />
+              </div>
             </div>
-          </div>
-        ))}
-      </ul>
-    </div>
-  );
+          ))}
+        </ul>
+      </div>
+      </>
+    );
+
 };
 
 export default Categorie;

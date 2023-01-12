@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import iconDroit from "../Asset/icons8-flèche-droite-50.png";
 import iconGauche from "../Asset/icons8-flèche-gauche-50.png"
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const NowTheater = () => {
   const navigate = useNavigate();
@@ -66,12 +68,12 @@ const NowTheater = () => {
         (e, i) =>
           e.backdrop_path && (
             <div className="card" key={i}>
-              <img
-                className="moviePicture"
+              <LazyLoadImage
                 key={i}
                 src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
+                alt={`film${i}`}
                 width={"200px"}
-                alt="film"
+                effect='blur'
                 onClick={() => navigate(`/${e.id}`)}
               />
             </div>

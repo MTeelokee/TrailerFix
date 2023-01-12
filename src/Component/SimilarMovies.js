@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import NavBar from "./Navbar";
 
 const SimilarMovies = () => {
   const { id } = useParams();
@@ -29,16 +32,18 @@ const SimilarMovies = () => {
 
   return (
     <>
+    <NavBar/>
       {loading &&
         similarMovie.map(
           (e, i) =>
             i < 6 && (
               <div className="similarMovie">
-                <img
+                <LazyLoadImage
                   key={i}
                   src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
                   width={"200px"}
                   alt="film"
+                  effect='blur'
                   onClick={() => navigate(`/${e.id}`)}
                 />
               </div>

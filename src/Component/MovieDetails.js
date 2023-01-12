@@ -1,7 +1,10 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
+import Play from "../Asset/play.png";
+import Rating from "./Rating";
+import NavBar from "./Navbar";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -49,44 +52,64 @@ const MovieDetails = () => {
     fetchDataVideo();
   }, []);
 
-console.log(details)
+  console.log(details);
   return (
     <>
+    <NavBar/>
       {loading && (
         <div className="cardDetails">
-        <div className="filmdetail">
-          
-          <div>
-          <h1>{details.title}</h1>
-          <img
-            className="moviePicture"
-            src={`https://image.tmdb.org/t/p/original/${details.backdrop_path}`}
-            width={"400px"}
-            alt="film"
-          />
+          <div className="filmdetail">
+            <div>
+              <img
+                className="moviePicture"
+                src={`https://image.tmdb.org/t/p/original/${details.backdrop_path}`}
+                alt="film"
+                
+              />
+              <h1>{details.title}</h1>
+            </div>
+
+            <div className="credit">
+              <Rating children={details.vote_average.toFixed(2)}/> 
+              <p className="release">{`Year of release : ${details.release_date.substr(0, 4)}`}</p>
+            </div>
+            <p className="synopsis">
+              <span>Synopsis :</span> {details.overview}
+            </p>
+            <div className='line'></div>
+            <div className="more">
+              <Link 
+                to={`/${details.title}/${details.id}`}
+                className='similarMovie'
+              >
+                Similar Movies
+              </Link>
+              <div className="video">
+                <button
+                  onClick={() => removeContact()}
+                  style={{
+                    background: "none",
+                    color: "inherit",
+                    border: "none",
+                    padding: "0",
+                    font: "inherit",
+                    cursor: "pointer",
+                    outline: "inherit",
+                  }}
+                >
+                  {" "}
+                  <img width={"45px"} src={Play} alt="" />{" "}
+                </button>
+              </div>
+            </div>
           </div>
-          
-          <div className="credit">
-          <p>Average : {details.vote_average.toFixed(2)}</p>
-          <p>Year : {details.release_date.substr(0,4)}</p>
-          </div>
-          <p><span>Synopsis :</span> {details.overview}</p>
-          
-          <div className="more">
-          <Link to={`/${details.title}/${details.id}`} style={{textDecoration : "none" , color:"#E50914"}}>Similar Movies</Link>
-          <div className="video">
-            <button onClick={() => removeContact()} style={{backgroundColor : "#E50914" , color:"white"}}>Voir Trailer</button>
-            </div>
-            </div>
-            </div>
-           <div>
+          <div >
             {displayVideo && (
-              <ReactPlayer
+              <ReactPlayer playing={true} controls={true} width={'854px'} height={'480px'}
                 url={`https://www.youtube.com/watch?v=${video[0].key}`}
               />
             )}
-            </div> 
-          
+          </div>
         </div>
       )}
     </>
