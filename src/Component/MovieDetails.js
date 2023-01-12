@@ -92,7 +92,7 @@ const MovieDetails = () => {
               <span>Synopsis :</span> {details.overview}
             </p>
             <div>
-              {plateforme && (
+              {plateforme && plateforme.length>0 && (
                 <div>
                   <p>Available on :</p>
                   {plateforme.map((e, i) => (

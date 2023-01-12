@@ -49,7 +49,7 @@ const NavBar = () => {
           type="input"
           onChange={(e) => search(e)}
         />
-        <label className="form__label">Search films</label>
+        <label className="form__label">Search</label>
       </div>
       <div className="iconeDetail">
         <img src={user.img === 1 ? Mevine : Elyes} alt={user.name} width={"30px"} onClick={() => navigate("/")}/>
