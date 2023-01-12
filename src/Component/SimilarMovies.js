@@ -33,7 +33,7 @@ const SimilarMovies = () => {
         similarMovie.map(
           (e, i) =>
             i < 6 && (
-              <div className="card">
+              <div className="similarMovie">
                 <img
                   key={i}
                   src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}

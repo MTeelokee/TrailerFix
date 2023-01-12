@@ -24,8 +24,8 @@ const Categorie = () => {
   }, []);
 
   return (
-    <div>
-      <p>Actuellement au cinéma</p>
+    <div className="displayAll">
+      <h3>Actuellement au cinéma</h3>
       <NowTheater />
       <ul>
         {genre.map((e) => (

@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import iconDroit from "../Asset/icons8-flèche-droite-50.png";
+import iconGauche from "../Asset/icons8-flèche-gauche-50.png";
 
 const MovieCategory = (props) => {
   const navigate = useNavigate();
   const [movie, setMovie] = useState([]);
   const [count, setCount] = useState(2);
+  const [slice, setSlice] = useState({ start: "0", end: "6" });
   const API_KEY = process.env.REACT_APP_API_KEY;
 
   const fetchData = async () => {
@@ -22,24 +25,62 @@ const MovieCategory = (props) => {
     fetchData();
   }, [count]);
 
+  const changeSlicePlus = () => {
+    parseInt(slice.end) === 18 && setCount(count + 1);
+    parseInt(slice.end) + 6 < movie.length
+      ? setSlice((prevState) => ({
+          ...prevState,
+          start: parseInt(slice.start) + 6,
+          end: parseInt(slice.end) + 6,
+        }))
+      : setSlice((prevState) => ({
+          ...prevState,
+          start: "0",
+          end: "6",
+        }));
+  };
+
+  const changeSliceMoins = () =>{
+    parseInt(slice.start) === 0 && count> 2 && setCount(count - 1);
+  if(parseInt(slice.start) - 6 >= 0){setSlice( (prevState) => ({
+    ...prevState, start : parseInt(slice.start)-6, end : parseInt(slice.end) - 6}) )}
+    else if (parseInt(slice.start)=== 0 && count===2){return}
+     else{setSlice( (prevState) => ({
+        ...prevState, start : "12", end : "18"}) )} 
+        
+    }
+
+
+
   return (
     <div className="moviCategory">
-      <button onClick={() => count > 1 && setCount(count - 1)}>-</button>
-      {movie.map(
-        (e, i) =>
-          i < 6 && (
-            <div className="card" key={i}>
-              <img
-                key={i}
-                src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
-                width={"200px"}
-                alt="film"
-                onClick={() => navigate(`/${e.id}`)}
-              />
-            </div>
-          )
-      )}
-      <button onClick={() => setCount(count + 1)}>+</button>
+      <img
+        className="iconButtonFilm"
+        src={iconGauche}
+        width={"40px"}
+        height={"40px"}
+        alt="clickDroit"
+        onClick={() => changeSliceMoins()}
+      />
+      {movie.slice(slice.start, slice.end).map((e, i) => (
+        <div className="card" key={i}>
+          <img
+            key={i}
+            src={`https://image.tmdb.org/t/p/original/${e.poster_path}`}
+            width={"200px"}
+            alt="film"
+            onClick={() => navigate(`/${e.id}`)}
+          />
+        </div>
+      ))}
+      <img
+        className="iconButtonFilm"
+        src={iconDroit}
+        width={"40px"}
+        height={"40px"}
+        alt="clickDroit"
+        onClick={() => changeSlicePlus()}
+      />
     </div>
   );
 };

@@ -49,11 +49,14 @@ const MovieDetails = () => {
     fetchDataVideo();
   }, []);
 
-
+console.log(details)
   return (
     <>
       {loading && (
         <div className="cardDetails">
+        <div className="filmdetail">
+          
+          <div>
           <h1>{details.title}</h1>
           <img
             className="moviePicture"
@@ -61,17 +64,29 @@ const MovieDetails = () => {
             width={"400px"}
             alt="film"
           />
-          <p>Synopsis :</p>
-          <p>{details.overview}</p>
-          <Link to={`/${details.title}/${details.id}`}>Similar Movies</Link>
+          </div>
+          
+          <div className="credit">
+          <p>Average : {details.vote_average.toFixed(2)}</p>
+          <p>Year : {details.release_date.substr(0,4)}</p>
+          </div>
+          <p><span>Synopsis :</span> {details.overview}</p>
+          
+          <div className="more">
+          <Link to={`/${details.title}/${details.id}`} style={{textDecoration : "none" , color:"#E50914"}}>Similar Movies</Link>
           <div className="video">
-            <button onClick={() => removeContact()}>Voir Trailer</button>
+            <button onClick={() => removeContact()} style={{backgroundColor : "#E50914" , color:"white"}}>Voir Trailer</button>
+            </div>
+            </div>
+            </div>
+           <div>
             {displayVideo && (
               <ReactPlayer
                 url={`https://www.youtube.com/watch?v=${video[0].key}`}
               />
             )}
-          </div>
+            </div> 
+          
         </div>
       )}
     </>

@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import iconDroit from "../Asset/icons8-flèche-droite-50.png";
+import iconGauche from "../Asset/icons8-flèche-gauche-50.png"
 
 const NowTheater = () => {
   const navigate = useNavigate();
   const [movieInTheater, setMovieInTheater] = useState([]);
   const [count, setCount] = useState(1);
+  const [slice, setSlice] = useState({ start: "0", end: "6" });
   const API_KEY = process.env.REACT_APP_API_KEY;
 
   const fetchData = async () => {
@@ -23,12 +26,44 @@ const NowTheater = () => {
     fetchData();
   }, [count]);
 
+  const changeSlicePlus = () => {
+    parseInt(slice.end) === 18 && setCount(count + 1);
+    parseInt(slice.end) + 6 < movieInTheater.length
+      ? setSlice((prevState) => ({
+          ...prevState,
+          start: parseInt(slice.start) + 6,
+          end: parseInt(slice.end) + 6,
+        }))
+      : setSlice((prevState) => ({
+          ...prevState,
+          start: "0",
+          end: "6",
+        }));
+  };
+
+  const changeSliceMoins = () =>{
+    parseInt(slice.start) === 0 && count> 1 && setCount(count - 1);
+  if(parseInt(slice.start) - 6 >= 0){setSlice( (prevState) => ({
+    ...prevState, start : parseInt(slice.start)-6, end : parseInt(slice.end) - 6}) )}
+    else if (parseInt(slice.start)=== 0 && count===1){return}
+     else{setSlice( (prevState) => ({
+        ...prevState, start : "12", end : "18"}) )} 
+        
+    }
+    console.log(slice);
+    console.log(count);
   return (
-    <div className="moviCategory">
-      <button onClick={() => count > 1 && setCount(count - 1)}>-</button>
-      {movieInTheater.map(
+    <div className="NowTheater">
+      <img className="iconButtonFilm"
+        src={iconGauche}
+        width={"40px"}
+        height={"40px"}
+        alt="clickDroit"
+        onClick={() => changeSliceMoins()}
+      />
+
+      {movieInTheater.slice(slice.start, slice.end).map(
         (e, i) =>
-          i < 6 &&
           e.backdrop_path && (
             <div className="card" key={i}>
               <img
@@ -42,7 +77,14 @@ const NowTheater = () => {
             </div>
           )
       )}
-      <button onClick={() => setCount(count + 1)}>+</button>
+      {/* <button className="buttonFilm" onClick={() => setCount(count + 1)}></button> */}
+      <img className="iconButtonFilm"
+        src={iconDroit}
+        width={"40px"}
+        height={"40px"}
+        alt="clickDroit"
+        onClick={() => changeSlicePlus()}
+      />
     </div>
   );
 };
