@@ -277,7 +277,6 @@ h3{
 
 .ratings {
   font-size: large;
-  text-shadow: #FC0 1px 0 10px;
 }
 
 
@@ -348,3 +347,52 @@ h3{
 .iconeDetail{
   margin-top: 30px;
 }
+
+.cast{
+  margin: 10px;
+}
+
+.imp{
+  display: flex;
+  margin-left: 5px;
+}
+
+.principals_movie{
+margin-right: 15px;
+transition: all .2s ease-in-out;
+}
+.principals_tv{
+  margin-left: 15px;
+  transition: all .1s ease-in-out;
+  }
+
+  .principals_movie:hover{
+    transform: scale(1.5);
+  }
+
+  .principals_tv:hover{
+    transform: scale(1.5);
+  }
+
+  .log{
+    transition: all .2s ease-in-out;
+  }
+
+  .log:hover{
+    transform: scale(1.2);
+  }
+
+  .test{
+    margin-right: 20px;
+  }
+
+  .iconeLog{
+    margin: 25px 20px 15px 30px;
+  }
+  .nameLog{
+    margin-top: 0px;
+  }
+
+  .status_nb{
+
+  }

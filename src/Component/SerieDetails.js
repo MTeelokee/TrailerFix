@@ -56,7 +56,7 @@ const MovieDetails = () => {
     setVideo(video.sort((a, b) => b.type.localeCompare(a.type)));
     setDisplayVideo(true);
   };
-
+console.log(details)
   useEffect(() => {
     fetchData();
     fetchDataVideo();
@@ -74,7 +74,7 @@ const MovieDetails = () => {
                 src={`https://image.tmdb.org/t/p/original/${details.backdrop_path}`}
                 alt="film"
               />
-              <h1>{details.title}</h1>
+              <h1>{details.name}</h1>
             </div>
 
             <div className="credit">
@@ -83,8 +83,12 @@ const MovieDetails = () => {
                 Since : {details.first_air_date.substr(0, 4)}
               </p>
             </div>
-            <div>
-              Number of saisons : {details.number_of_seasons} (
+
+
+
+            <div className="status_nb">
+            { details.next_episode_to_air ? (<div>Statut : Ongoing </div>):(<div> Statut : Ended  </div>) }
+              Number of seasons : {details.number_of_seasons} (
               {details.number_of_episodes} episodes)
             </div>
             <p className="synopsis">
@@ -134,7 +138,7 @@ const MovieDetails = () => {
             </div>
           </div>
           <div>
-            {displayVideo && (
+            {displayVideo && video.length > 0 && (
               <ReactPlayer
                 playing={true}
                 controls={true}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 import Play from "../Asset/play.png";
 import Rating from "./Rating";
+import Tor from "../Asset/tor.png";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -13,7 +14,25 @@ const MovieDetails = () => {
   const [plateforme, setPlateforme] = useState([]);
   const [loading, setLoading] = useState(false);
   const [displayVideo, setDisplayVideo] = useState(false);
+  const [cast, setCast] = useState([]);
+
   const API_KEY = process.env.REACT_APP_API_KEY;
+
+  const fetchDataCast = async () => {
+    try {
+      const callData = await axios.get(
+        `   https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
+      );
+
+      setCast(callData.data.cast);
+      setLoading(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(cast);
+
   const fetchData = async () => {
     try {
       const callData = await axios.get(
@@ -62,6 +81,7 @@ const MovieDetails = () => {
     fetchData();
     fetchDataVideo();
     fetchDataPlateforme();
+    fetchDataCast();
   }, []);
 
   return (
@@ -105,6 +125,30 @@ const MovieDetails = () => {
                 </div>
               )}
             </div>
+
+            <div>
+              {cast && cast.length > 0 && (
+                <div className="imp">
+                  {cast
+                    .slice(0, 3)
+                    .filter((el) => el.profile_path.length > 0)
+                    .map((e, i) => (
+                      <div key={i} className="tooltip">
+                        <img
+                          className="cast"
+                          src={`https://image.tmdb.org/t/p/original/${e.profile_path}`}
+                          width={"50px"}
+                          style={{ borderRadius: "30px" }}
+                          alt="plateformelogo"
+                        />
+
+                        <span className="tooltiptext">{e.name}</span>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+
             <div className="line"></div>
             <div className="more">
               <Link
@@ -127,13 +171,30 @@ const MovieDetails = () => {
                   }}
                 >
                   {" "}
+                  <img width={"45px"} src={Tor} alt="" />{" "}
+                </button>
+              </div>
+              <div className="video">
+                <button
+                  onClick={() => removeContact()}
+                  style={{
+                    background: "none",
+                    color: "inherit",
+                    border: "none",
+                    padding: "0",
+                    font: "inherit",
+                    cursor: "pointer",
+                    outline: "inherit",
+                  }}
+                >
+                  {" "}
                   <img width={"45px"} src={Play} alt="" />{" "}
                 </button>
               </div>
             </div>
           </div>
           <div>
-            {displayVideo && (
+            {displayVideo && video && video[0].key && (
               <ReactPlayer
                 playing={true}
                 controls={true}

@@ -14,6 +14,7 @@ import SerieDetails from "./Component/SerieDetails";
 import SimilarSeries from "./Component/SimilarSeries";
 import NavBar from "./Component/Navbar";
 
+
 const App = () => {
   const [genre, setGenre] = useState([]);
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -33,6 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
+
       <UserController>
         <Routes>
           <Route path="/" element={<Acceuil />} />

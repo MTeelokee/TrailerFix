@@ -29,7 +29,7 @@ const NavBar = () => {
   return (
     <>
       <div className="navBar">
-        <div>
+        <div className="log">
           <NavLink
             activeclassname="active"
             to="/home/movie"
@@ -43,43 +43,49 @@ const NavBar = () => {
             />
           </NavLink>
         </div>
-        <div className="link">
-          <NavLink
-            activeclassname="active navbarlink"
-            to="/home/movie"
-            onClick={() => clear()}
-          >
-            {" "}
-            <img src={Movies} alt="" />{" "}
-          </NavLink>
-          -
-          <NavLink
-            activeclassname="active"
-            to="/home/series"
-            onClick={() => clear()}
-          >
-            <img src={Tv} alt="" />
-          </NavLink>
+        <div className="link ">
+<div className="principals_movie">
+            <NavLink
+              activeclassname="active navbarlink"
+              to="/home/movie"
+              onClick={() => clear()}
+            >
+              {" "}
+              <img src={Movies} alt="" />{" "}
+            </NavLink>
+</div>
+
+<div className="principals_tv">
+            <NavLink
+              activeclassname="active"
+              to="/home/series"
+              onClick={() => clear()}
+            >
+              <img src={Tv} alt="" />
+            </NavLink>
+</div>
         </div>
 
         <div className="iconeName">
-          <div className="form__group field">
-            <input
-              placeholder="Search films"
-              className="form__field"
-              type="input"
-              onChange={(e) => search(e)}
-            />
-            <label className="form__label">Search</label>
-          </div>
-          <div className="iconeDetail">
+<div className="test">
+            <div className="form__group field">
+              <input
+                placeholder="Search films"
+                className="form__field"
+                type="input"
+                onChange={(e) => search(e)}
+              />
+              <label className="form__label">Search</label>
+            </div>
+</div>
+          <div className="iconeLog">
             <img
               src={user.img === 1 ? Mevine : Elyes}
               alt={user.name}
-              width={"30px"}
+              width={"50px"}
               onClick={() => navigate("/")}
             />
-            <p style={{ fontSize: "10px" }}>{user.name}</p>
+            <p className="nameLog" style={{ fontSize: "15px" }}>{user.name}</p>
           </div>
         </div>
       </div>
