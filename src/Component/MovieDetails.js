@@ -25,13 +25,11 @@ const MovieDetails = () => {
       );
 
       setCast(callData.data.cast);
-      setLoading(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(cast);
 
   const fetchData = async () => {
     try {
@@ -127,7 +125,7 @@ const MovieDetails = () => {
             </div>
 
             <div>
-              {cast && cast.length > 0 && (
+              { loading && cast && cast.length > 0 && (
                 <div className="imp">
                   {cast
                     .slice(0, 3)
